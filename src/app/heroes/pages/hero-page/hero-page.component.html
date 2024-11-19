@@ -1,0 +1,48 @@
+<ng-template #divLoading>
+  <div
+    class="flex w-full h-screen align-items-center justify-content-center align-content-center"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<div *ngIf="hero; else divLoading" class="grid mt-8 justify-content-center">
+  <div class="col-12 sm:col-4">
+    <img
+      [src]="hero | heroImageUrl"
+      [alt]="hero.superhero"
+      class="w-26rem sm:w-27rem"
+    />
+  </div>
+
+  <div class="col-12 sm:col-4">
+    <mat-list>
+      <mat-list-item>
+        Superhero: <mat-chip>{{ hero.superhero }}</mat-chip>
+      </mat-list-item>
+
+      <mat-list-item>
+        Alter_ego: <mat-chip>{{ hero.alter_ego }}</mat-chip>
+      </mat-list-item>
+
+      <mat-list-item>
+        First appearance: <mat-chip>{{ hero.first_appearance }}</mat-chip>
+      </mat-list-item>
+
+      <mat-list-item>
+        Publisher: <mat-chip>{{ hero.publisher }}</mat-chip>
+      </mat-list-item>
+
+      <mat-list-item>
+        Characters: <mat-chip>{{ hero.characters }}</mat-chip>
+      </mat-list-item>
+    </mat-list>
+
+    <div>
+      <button mat-button (click)="goBack()">
+        <mat-icon>arrow_back_ios</mat-icon>
+        Go back
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '220px' }">
+    <mat-toolbar class="shadow-4" class="bg-cyan-900">
+      <span>Menu</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-nav-list class="mt-4">
+      <mat-list-item
+        *ngFor="let item of sidebarItem"
+        class="flex flex-column align-items-center"
+      >
+        <button
+          [routerLink]="item.url"
+          mat-stroked-button
+          class="w-10rem"
+          (click)="sidenav.toggle()"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.label }}
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-toolbar class="bg-cyan-900 fixed z-5">
+    <button
+      mat-icon-button
+      (click)="sidenav.toggle()"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Heroes App</span>
+    <span class="spacer"></span>
+    <button mat-flat-button>Log out</button>
+  </mat-toolbar>
+
+  <div class="overflow-x-hidden">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

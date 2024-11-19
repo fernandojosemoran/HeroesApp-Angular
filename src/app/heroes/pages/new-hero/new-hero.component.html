@@ -1,0 +1,55 @@
+<div class="ml-4 mr-4">
+  <h1 class="mt-8 text-5xl">Edit / Add</h1>
+
+  <mat-divider class="mb-2"></mat-divider>
+
+  <div class="grid">
+    <div class="col-12 sm:col-6">
+      <mat-card>
+        <mat-card-content>
+          <div class="grid">
+            <mat-form-field class="col-12">
+              <mat-label>Super Hero</mat-label>
+              <input type="text" matInput required />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <mat-label>Alter Ego</mat-label>
+              <input type="text" matInput required />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <mat-label>First Appearance</mat-label>
+              <input type="text" matInput required />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <mat-label>Characters</mat-label>
+              <input type="text" matInput required />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <mat-label>Publisher</mat-label>
+              <<mat-select required>
+                @for (publisher of publishers; track $index) {
+                <mat-option [value]="publisher.id">
+                  {{ publisher.desc }}
+                </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="flex justify-content-evenly">
+            <button mat-flat-button color="warn">Delete</button>
+            <button mat-flat-button color="primary">Save</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-12 sm:col-6">
+      <img [src]="" alt="hero image" />
+    </div>
+  </div>
+</div>

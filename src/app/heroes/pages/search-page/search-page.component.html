@@ -1,0 +1,42 @@
+<div class="ml-4 mr-4">
+  <h1 class="mt-8 text-5xl">Search Hero</h1>
+  <mat-divider />
+
+  <div class="grid mb-8 pt-2 mt-4 z-2">
+    <div class="col-12">
+      <mat-form-field class="sm:w-30rem w-21rem">
+        <mat-label>Search</mat-label>
+        <input
+          type="text"
+          [formControl]="fmControlSearchInput"
+          #heroSearchInput
+          matInput
+          [matAutocomplete]="auto"
+          (keyup)="onKeyPress()"
+        />
+
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          @for (hero of heroes; track $index) {
+          <mat-option [value]="hero.superhero">
+            {{ hero.superhero }}
+          </mat-option>
+          } @if (heroes.length === 0 && heroSearchInput.value.length > 0) {
+          <mat-option [value]="">
+            Term "{{ heroSearchInput.value }}" not found.
+          </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    @for (hero of heroes; track $index) {
+    <div class="col-12 sm:col-4 md:col-3">
+      <heroes-card [hero]="hero" />
+    </div>
+    }
+  </div>
+</div>
+
+<div class="loader-container z-4" *ngIf="loader">
+  <mat-spinner></mat-spinner>
+</div>

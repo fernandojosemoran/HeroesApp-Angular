@@ -1,0 +1,12 @@
+<div class="ml-4 mr-4">
+  <h1 class="mt-8 text-5xl">Heroes List</h1>
+  <mat-divider />
+
+  <div class="grid mt-2">
+    @for (hero of heroes; track $index) {
+    <div class="col-12 sm:col-4 md:col-3">
+      <heroes-card [hero]="hero" />
+    </div>
+    }
+  </div>
+</div>
