@@ -12,5 +12,5 @@
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ],
-  "exclude": ["node_module"]
+  "exclude": ["node_module", "dist", ".angular"]
 }

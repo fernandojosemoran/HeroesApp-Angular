@@ -4,21 +4,27 @@
     <mat-card-subtitle>{{ hero.alter_ego }}</mat-card-subtitle>
   </mat-card-header>
 
-  <img matCardImage [src]="hero | heroImageUrl" [alt]="hero.superhero" />
+  <img
+    matCardImage
+    [src]="hero | heroImageUrl"
+    [alt]="hero.superhero"
+    class="w-full sm:h-20rem bg-cover"
+  />
 
   <mat-card-content class="mt-2 p-2">
     <h4>{{ hero.publisher }}</h4>
+
     <p>first appearance: {{ hero.first_appearance }}</p>
 
     <mat-chip-listbox class="flex flex-row overflow-x-auto h-3rem">
       @for (character of hero.characters | list; track $index) {
-      <mat-chip><{{ character }}</mat-chip>
+      <mat-chip>{{ character }}</mat-chip>
       }
     </mat-chip-listbox>
   </mat-card-content>
 
+  @if(visible){
   <mat-divider />
-
   <mat-card-actions class="flex gap-2">
     <button
       mat-stroked-button
@@ -38,4 +44,5 @@
       View
     </button>
   </mat-card-actions>
+  }
 </mat-card>

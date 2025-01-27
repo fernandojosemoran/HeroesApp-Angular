@@ -1,3 +1,6 @@
+export interface IHeroResponse {
+  response: IHero | IHero[] | string
+}
 export interface IHero {
   id: string;
   superhero: string;

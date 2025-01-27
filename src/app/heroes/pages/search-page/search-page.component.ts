@@ -58,6 +58,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   public onSelectedOption(event: MatAutocompleteSelectedEvent): void {
     let heroSelected: IHero = event.option.value;
+
+    if (!heroSelected.id) return;
+
     this.fmControlSearchInput.setValue(heroSelected.superhero);
 
     this.heroesService.getHeroById(heroSelected.id)

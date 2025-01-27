@@ -1,0 +1,10 @@
+.btn-options {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto 0;
+}
+
+.btn-confirm {
+  background-color: rgba(160, 0, 0, 0.541);
+  color: rgba(160, 0, 0, 0.753)
+}

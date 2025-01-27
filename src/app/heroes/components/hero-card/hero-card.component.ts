@@ -9,4 +9,7 @@ import { IHero } from "@heroes/interfaces/hero.interface";
 export class HeroCardComponent {
   @Input()
   public hero!: IHero;
+
+  @Input()
+  public visible: boolean = true;
 }

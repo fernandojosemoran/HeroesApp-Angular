@@ -1,3 +1,4 @@
 export const environment = {
-  baseUrl: "http://127.0.0.1:3000"
+  base_url_api: "http://127.0.0.1:3000/api",
+  backend_host: "http://127.0.0.1:3000"
 };

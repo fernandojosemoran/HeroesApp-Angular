@@ -5,6 +5,7 @@ const angular = require("angular-eslint");
 
 module.exports = tseslint.config(
   {
+    ignores: ["node_modules", "dist", ".angular"],
     files: ["**/*.ts"],
     extends: [
       eslint.configs.recommended,
@@ -14,6 +15,7 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      semi: ["error", "always"],
       "@angular-eslint/directive-selector": [
         "error",
         {
@@ -37,9 +39,6 @@ module.exports = tseslint.config(
     extends: [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
-    ],
-    rules: {
-      semi: ["error","always"]
-    },
+    ]
   }
 );

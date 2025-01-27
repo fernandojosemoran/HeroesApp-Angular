@@ -1,22 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from "@env/environment";
-import { IHero } from '@heroes/interfaces/hero.interface';
-import { catchError, debounceTime, delay, map, Observable, of, tap } from 'rxjs';
+import { IHero, IHeroResponse } from '@heroes/interfaces/hero.interface';
+import { catchError, delay, map, Observable, of } from 'rxjs';
+
+type HeroResponseType = IHero | IHero[] | string | undefined;
 
 @Injectable({ providedIn: 'root' })
 export class HeroesService {
   // hidden dependencies
-  private readonly BASE_URL: string = environment.baseUrl;
+  private readonly BASE_URL: string = environment.base_url_api;
 
   public constructor(
     private readonly _http: Http
   ) { }
 
-  public getHeroes(): Observable<IHero[] | undefined> {
-    const url: string = `${this.BASE_URL}/heroes`;
+  public existHero(id: string): boolean {
 
-    return this._http.get<IHero[]>(url);
+    let exist: boolean = false;
+
+    this.getHeroById(id).subscribe(hero => hero ? exist = true : exist = false);
+
+    return exist;
+  }
+
+  public getHeroes(): Observable<IHero[] | undefined> {
+    const url: string = `${this.BASE_URL}/hero/heroes-list`;
+
+    return this._http.get<IHeroResponse>(url).pipe(map(heroResponse => heroResponse?.response as IHero[]));
   }
 
   public searchHero(name: string): Observable<IHero[] | undefined> {
@@ -42,8 +53,12 @@ export class HeroesService {
       )
   }
 
-  public addHero(hero: IHero): Observable<IHero | undefined> {
-    return this._http.post<IHero>(environment.baseUrl, hero);
+  public addHero(hero: IHero): Observable<HeroResponseType> {
+    return this._http.post<IHeroResponse>(`${this.BASE_URL}/hero/create`, hero).pipe(map(heroResponse => heroResponse?.response));
+  }
+
+  public updateHero(hero: IHero): Observable<string | undefined> {
+    return this._http.put<IHeroResponse>(`${this.BASE_URL}/hero/update/${hero.id}`, hero).pipe(map(heroResponse => heroResponse?.response as string));
   }
 }
 
@@ -67,4 +82,17 @@ class Http {
       );
   }
 
+  public put<T>(url: string, hero: IHero): Observable<T | undefined> {
+    return this._http.put<T>(url, hero)
+      .pipe(
+        catchError(() => of(undefined))
+      );
+  }
+
+  public delete<T>(url: string, hero: IHero): Observable<T | undefined> {
+    return this._http.post<T>(url, hero)
+      .pipe(
+        catchError(() => of(undefined))
+      );
+  }
 }
