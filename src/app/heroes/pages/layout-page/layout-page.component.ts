@@ -28,5 +28,5 @@ export class LayoutPageComponent {
       icon: "search",
       url: "/heroes/search-hero"
     }
-  ]
+  ];
 }

@@ -12,7 +12,7 @@ export class HeroImagePipe implements PipeTransform {
       return `./images/no-image.png`;
     }
 
-    const regex = new RegExp("^/media/hero/[a-zA-Z0-9-]+\.jpg$")
+    const regex = new RegExp("^/api/media/hero/[a-zA-Z0-9-]+\.jpg$");
     const isPathName: boolean = regex.test(hero.alt_image);
 
     const url: string = isPathName ? environment.backend_host + hero.alt_image : hero.alt_image;

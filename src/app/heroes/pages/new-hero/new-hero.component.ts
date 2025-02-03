@@ -47,7 +47,7 @@ export class NewHeroPageComponent implements OnDestroy, OnInit {
     first_appearance: "first_appearance",
     publisher: "publisher" as IPublisher,
     superhero: "superhero"
-  }
+  };
 
   public publishers: IPublisherOptions[] = [
     { id: 'DC Comics', desc: 'DC - Comics' },
@@ -59,14 +59,14 @@ export class NewHeroPageComponent implements OnDestroy, OnInit {
 
     if (!this.heroForm.valid) return this._snackbarService.open(`There're fields within complete.`);
 
-    let subscriber: Subscription = this._heroesService.addHero(hero)
+    const subscriber: Subscription = this._heroesService.addHero(hero)
       .subscribe((response)  => {
         if (!response) return this._snackbarService.open("Sorry something occurred wrang.");
         if (typeof response === "string") return this._snackbarService.open(response);
 
         response = response as IHero;
 
-        this._router.navigate([`/heroes/${response.id}`]);
+        this._router.navigate([ `/heroes/${response.id}` ]);
       });
 
     this._subscribers?.push(subscriber);

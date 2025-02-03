@@ -1,29 +1,39 @@
-<div class="flex flex-column">
+<form [formGroup]="registerForm" (submit)="register()" class="flex flex-column">
   <h1 class="text-2xl mb-4">Register</h1>
 
   <mat-form-field>
-    <mat-label>User</mat-label>
-    <input type="text" matInput />
+    <mat-label>User Name</mat-label>
+    <input formControlName="userName" type="text" matInput required />
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input type="text" matInput />
+    <mat-label>Last Name</mat-label>
+    <input formControlName="lastName" type="text" matInput required />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input type="email" matInput />
+    <input formControlName="email" type="email" matInput required />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Password</mat-label>
-    <input type="password" matInput />
+    <input formControlName="password" type="password" matInput required />
   </mat-form-field>
 
-  <button mat-stroked-button>Register</button>
+  <mat-form-field>
+    <mat-label>Confirm Password</mat-label>
+    <input
+      formControlName="confirmPassword"
+      type="password"
+      matInput
+      required
+    />
+  </mat-form-field>
+
+  <button (click)="register()" mat-stroked-button>Register</button>
 
   <div class="flex justify-content-end mt-5">
     <a routerLink="/auth/login">You already have an account?</a>
   </div>
-</div>
+</form>

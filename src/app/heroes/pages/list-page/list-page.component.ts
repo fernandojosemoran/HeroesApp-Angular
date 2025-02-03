@@ -19,7 +19,7 @@ export class ListPageComponent implements OnInit {
       .subscribe((heroes) => {
         if (!heroes) return;
 
-        this.heroes = heroes
+        this.heroes = heroes;
       });
   }
 }

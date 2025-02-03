@@ -17,7 +17,7 @@ export class HeroesService {
 
   public existHero(id: string): boolean {
 
-    let exist: boolean = false;
+    let exist = false;
 
     this.getHeroById(id).subscribe(hero => hero ? exist = true : exist = false);
 
@@ -25,7 +25,7 @@ export class HeroesService {
   }
 
   public getHeroes(): Observable<IHero[] | undefined> {
-    const url: string = `${this.BASE_URL}/hero/heroes-list`;
+    const url = `${this.BASE_URL}/hero/heroes-list`;
 
     return this._http.get<IHeroResponse>(url).pipe(map(heroResponse => heroResponse?.response as IHero[]));
   }
@@ -37,7 +37,7 @@ export class HeroesService {
           .toLowerCase()
           .includes(name.toLowerCase())
         );
-    }
+    };
 
     return this.getHeroes()
       .pipe(
@@ -50,7 +50,7 @@ export class HeroesService {
       .pipe(
         map((heroes) => heroes!.find((hero) => hero.id === id)),
         delay(1000)
-      )
+      );
   }
 
   public addHero(hero: IHero): Observable<HeroResponseType> {

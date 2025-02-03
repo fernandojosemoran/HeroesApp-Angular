@@ -18,10 +18,10 @@ export class DialogComponent {
   public data = inject<string>(MAT_DIALOG_DATA);
 
   public confirm() {
-    this._router.navigate(["/heroes/list"]);
+    this._router.navigate([ "/heroes/list" ]);
   }
 
   public cancel() {
-    this._dialogService.close()
+    this._dialogService.close();
   }
 }

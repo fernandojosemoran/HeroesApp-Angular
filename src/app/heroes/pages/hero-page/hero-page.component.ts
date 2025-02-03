@@ -35,7 +35,7 @@ export class HeroPageComponent implements OnInit, OnDestroy {
     this._subscribe = this._heroService.getHeroById(this._id!)
       .subscribe(
         (hero) => {
-          if (!hero) return this._router.navigate(["/heroes/list"]);
+          if (!hero) return this._router.navigate([ "/heroes/list" ]);
 
           this.hero = hero;
           return;
@@ -44,7 +44,7 @@ export class HeroPageComponent implements OnInit, OnDestroy {
   }
 
   public goBack(): void {
-    this._router.navigate(["/heroes/list"]);
+    this._router.navigate([ "/heroes/list" ]);
   }
 
   public ngOnDestroy(): void {

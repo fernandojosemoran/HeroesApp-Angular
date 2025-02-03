@@ -11,5 +11,5 @@ export class HeroCardComponent {
   public hero!: IHero;
 
   @Input()
-  public visible: boolean = true;
+  public visible = true;
 }

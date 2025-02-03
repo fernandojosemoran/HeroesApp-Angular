@@ -24,19 +24,19 @@ export class EditPageComponent implements OnDestroy, OnInit {
     private readonly _activateRouter: ActivatedRoute
   ) {}
 
-  public loader: boolean = false;
+  public loader = false;
 
   public ngOnInit(): void {
 
     const handlerHeroPipe = (hero: IHero | undefined) => {
-      if (!hero) return this._router.navigate(["/heroes/list"]);
+      if (!hero) return this._router.navigate([ "/heroes/list" ]);
 
       this.loader = true;
 
       this.heroForm.setValue(hero);
 
       return;
-    }
+    };
 
     const handlerHeroNext = (hero: IHero | undefined) => {
       if (!hero) return;
@@ -44,7 +44,7 @@ export class EditPageComponent implements OnDestroy, OnInit {
       this.loader = false;
 
       this.heroForm.patchValue(hero);
-    }
+    };
 
     this._activateRouter.params.pipe(
       switchMap(({ id }) => this._heroesService.getHeroById(id)),
@@ -73,7 +73,7 @@ export class EditPageComponent implements OnDestroy, OnInit {
     first_appearance: "first_appearance",
     publisher: "publisher" as IPublisher,
     superhero: "superhero"
-  }
+  };
 
   public publishers: IPublisherOptions[] = [
     { id: 'DC Comics', desc: 'DC - Comics' },
@@ -85,11 +85,11 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
     if (!this.heroForm.valid) return this._snackbarService.open(`There're fields within complete.`);
 
-    let subscriber: Subscription = this._heroesService.updateHero(hero)
+    const subscriber: Subscription = this._heroesService.updateHero(hero)
       .subscribe((response)  => {
         if (!response) return this._snackbarService.open("Sorry something occurred wrang.");
 
-        this._router.navigate([`/heroes/${response}`]);
+        this._router.navigate([ `/heroes/${response}` ]);
       });
 
     this._subscribers?.push(subscriber);

@@ -28,7 +28,7 @@ export class DialogService implements IDialogService {
       //   right: "0",
       //   left: "0"
       // }
-    }
+    };
 
     this.dialogRef = this._matDialog.open(DialogComponent, matDialogConf);
   }

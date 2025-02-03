@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Error404PageComponent } from './shared/pages/error-404-page/error-404-page.component';
 import { HomePageComponent } from './shared/pages/home-page/home-page.component';
+import { AuthGuardService } from '@auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,9 @@ const routes: Routes = [
   },
   {
     path: "heroes",
-    loadChildren: () => import('./heroes/heroes.module').then(m => m.HeroesModule)
+    loadChildren: () => import('./heroes/heroes.module').then(m => m.HeroesModule),
+    canActivate: [ AuthGuardService ],
+    canMatch: [ AuthGuardService ]
   },
   {
     path: "**",
@@ -24,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

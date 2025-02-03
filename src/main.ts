@@ -9,4 +9,4 @@ platformBrowserDynamic()
       ngZoneEventCoalescing: true
     }
   )
-  .catch(err => console.error(err))
+  .catch(err => console.error(err));
