@@ -22,35 +22,28 @@ interface IHttpHandlerOptions {
   } | boolean;
 }
 
-@Injectable({ providedIn: "root" })
-class HttpHandler {
+
+@Injectable({ providedIn: 'root' })
+export class AuthService implements IAuthService {
   private readonly _baseUrl: string = environment.base_url_api;
 
   public constructor(
-     readonly _http: HttpClient
+    protected readonly _http: HttpClient
   ) {}
 
-  public post<T>(hostName: string, object?: unknown, config?: IHttpHandlerOptions): Observable<T | undefined> {
+  private httpPost<T>(hostName: string, object?: unknown, config?: IHttpHandlerOptions): Observable<T | undefined> {
     return this._http.post<T>(`${this._baseUrl}${hostName}`, object, config)
     .pipe(
       catchError((error: HttpErrorResponse) => of(error.error))
     );
   }
-}
-
-@Injectable({ providedIn: 'root' })
-export class AuthService implements IAuthService {
-
-  public constructor(
-    protected readonly _http: HttpHandler
-  ) {}
 
   public login(userName: string, email: string, password: string): Observable<ILoginUser | string> {
     const config: IHttpHandlerOptions = {
       withCredentials: true
     };
 
-    return this._http.post<ILoginResponse>(`/auth/login`, { userName, email, password }, config)
+    return this.httpPost<ILoginResponse>(`/auth/login`, { userName, email, password }, config)
     .pipe(map((response) => response!.response));
   }
 
@@ -62,12 +55,21 @@ export class AuthService implements IAuthService {
       }
     };
 
-    return this._http.post<{ response: string | undefined}>("/auth/register", { userName, lastName, email, password, confirmPassword }, config)
-    .pipe(map((response) => response!.response));
+    return this.httpPost<{ response: string | undefined}>(
+      "/auth/register",
+      {
+        userName,
+        lastName,
+        email,
+        password,
+        confirmPassword
+      },
+      config
+    ).pipe(map((response) => response!.response));
   }
 
   public logout() {
-    this._http.post("/auth/logout");
+    this.httpPost("/auth/logout");
   }
 
   public refreshToken(): Observable<boolean> {
@@ -80,7 +82,7 @@ export class AuthService implements IAuthService {
       }
     };
 
-    return this._http.post<{ response: string | boolean | undefined}>('/auth/refresh-token', null, config)
+    return this.httpPost<{ response: string | boolean | undefined}>('/auth/refresh-token', null, config)
     .pipe(map((response => {
       if (!response?.response) return false;
       if (typeof response?.response === "string") return false;

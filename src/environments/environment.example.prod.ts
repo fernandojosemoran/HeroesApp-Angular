@@ -3,5 +3,3 @@ export const environment = {
   backend_host: "https://hero-app-api-production.up.railway.app",
   debug: false
 };
-
-// https://hero-app-api-production.up.railway.app/

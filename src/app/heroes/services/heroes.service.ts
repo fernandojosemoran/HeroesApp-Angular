@@ -4,7 +4,7 @@ import { environment } from "@env/environment";
 import { IHero, IHeroResponse } from '@heroes/interfaces/hero.interface';
 import { catchError, delay, map, Observable, of } from 'rxjs';
 
-type HeroResponseType = IHero | IHero[] | string | undefined;
+export type HeroResponseType = IHero | IHero[] | string | undefined;
 
 @Injectable({ providedIn: 'root' })
 export class HeroesService {

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IHero, IPublisher } from '@heroes/interfaces/hero.interface';
 import { DialogService } from '@shared/services/dialog.service';
-import { HeroesService } from '@heroes/services/heroes.service';
+import { HeroesService, HeroResponseType } from '@heroes/services/heroes.service';
 import { SnackBarService } from '@shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 import { environment } from '@env/environment';
@@ -69,15 +69,16 @@ export class NewHeroPageComponent implements OnDestroy {
 
     if (!this.heroForm.valid) return this._snackbarService.openUnsuccessSnackbar(`There're fields within complete.`);
 
-    const subscriber: Subscription = this._heroesService.addHero(hero)
-      .subscribe((response)  => {
-        if (!response) return this._snackbarService.openUnsuccessSnackbar("Sorry something occurred wrang.");
-        if (typeof response === "string") return this._snackbarService.openUnsuccessSnackbar(response);
+    const heroResponse = (response: HeroResponseType) => {
+      if (!response) return this._snackbarService.openUnsuccessSnackbar("Sorry something occurred wrang.");
+      if (typeof response === "string") return this._snackbarService.openUnsuccessSnackbar(response);
 
-        response = response as IHero;
+      response = response as IHero;
 
-        this._router.navigate([ `/heroes/${response.id}` ]);
-      });
+      this._router.navigate([ `/heroes/${response.id}` ]);
+    };
+
+    const subscriber: Subscription = this._heroesService.addHero(hero).subscribe(heroResponse);
 
     this._subscribers?.push(subscriber);
   }
