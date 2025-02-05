@@ -55,7 +55,11 @@ export class AuthService implements IAuthService {
       }
     };
 
+<<<<<<< HEAD
     return this.httpPost<{ response: string | undefined}>(
+=======
+    return this._http.post<{ response: string | undefined}>(
+>>>>>>> 71a485d (refactor: improved the .gitignore)
       "/auth/register",
       {
         userName,
