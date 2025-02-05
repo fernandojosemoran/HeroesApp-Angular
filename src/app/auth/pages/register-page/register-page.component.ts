@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth/services/auth.service';
-import { SnackBarService } from '@heroes/services/snackbar.service';
+import { SnackBarService } from '@shared/services/snackbar.service';
 import { pipe } from 'rxjs';
 
 interface IRegisterField {
@@ -14,8 +14,7 @@ interface IRegisterField {
 
 @Component({
   selector: 'auth-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrl: './register-page.component.css'
+  templateUrl: './register-page.component.html'
 })
 export class RegisterPageComponent {
   public constructor(
@@ -24,12 +23,23 @@ export class RegisterPageComponent {
   ) {}
 
   public registerForm: FormGroup = new FormGroup({
-    userName: new FormControl("", { nonNullable: true }),
-    lastName: new FormControl("", { nonNullable: true }),
-    email: new FormControl("", { nonNullable: true }),
-    password: new FormControl("", { nonNullable: true }),
-    confirmPassword: new FormControl("", { nonNullable: true }),
+    userName: new FormControl("", { nonNullable: true, validators: [ Validators.required,Validators.maxLength(50),Validators.minLength(4) ] }),
+    lastName: new FormControl("", { nonNullable: true, validators: [ Validators.required,Validators.maxLength(50),Validators.minLength(4) ] }),
+    email: new FormControl("", { nonNullable: true, validators: [ Validators.required,Validators.email ] }),
+    password: new FormControl("", { nonNullable: true, validators: [ Validators.required,Validators.maxLength(100),Validators.minLength(3) ] }),
+    confirmPassword: new FormControl("", { nonNullable: true, validators: [ Validators.required,Validators.maxLength(100),Validators.minLength(3) ] }),
   });
+
+  public getErrorMessages(field: string) {
+    const control = this.registerForm.get(field);
+    if (control?.hasError("required")) return "Field is required.";
+    if (control?.hasError("minlength")) return `Must have at least ${ control.errors?.["minlength"].requiredLength } characters.`;
+    if (control?.hasError("maxlength")) return `Should not exceed ${ control.errors?.["maxlength"].requiredLength } characters.`;
+    if (control?.hasError('email')) return 'The email address is not valid.';
+    return "";
+  }
+
+  // "minlength" | "maxlength" | "email" | "password" | "required";
 
   public register(): void {
     const {
@@ -43,7 +53,7 @@ export class RegisterPageComponent {
     if (!this.registerForm.valid) return;
 
     this._authService.register(userName, email, lastName, password, confirmPassword)
-    .subscribe(pipe((response) => response && this._snackbarService.open(response)));
+    .subscribe(pipe((response) => response && this._snackbarService.openUnsuccessSnackbar(response)));
   }
 }
 

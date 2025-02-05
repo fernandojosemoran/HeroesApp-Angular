@@ -82,8 +82,8 @@ export class AuthService implements IAuthService {
 
     return this._http.post<{ response: string | boolean | undefined}>('/auth/refresh-token', null, config)
     .pipe(map((response => {
-      if (!response) return false;
-      if (typeof response === "string") return false;
+      if (!response?.response) return false;
+      if (typeof response?.response === "string") return false;
 
       return response.response as boolean;
     })));

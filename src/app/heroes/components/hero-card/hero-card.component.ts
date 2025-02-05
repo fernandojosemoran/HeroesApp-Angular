@@ -3,8 +3,7 @@ import { IHero } from "@heroes/interfaces/hero.interface";
 
 @Component({
   selector: "heroes-card",
-  templateUrl: "./hero-card.component.html",
-  styleUrl: "./hero-card.component.css"
+  templateUrl: "./hero-card.component.html"
 })
 export class HeroCardComponent {
   @Input()

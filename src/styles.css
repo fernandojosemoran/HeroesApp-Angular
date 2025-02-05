@@ -17,3 +17,11 @@ body {
 .container{
   margin: 2em 2em 0 2em;
 }
+
+.snackbar-success {
+  background-color: rgb(160, 247, 160);
+}
+
+.snackbar-unsuccess {
+  background-color: rgb(248, 74, 97);
+}

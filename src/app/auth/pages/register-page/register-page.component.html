@@ -5,21 +5,37 @@
     <mat-label>User Name</mat-label>
     <input formControlName="userName" type="text" matInput required />
   </mat-form-field>
+  @if (registerForm.get('userName')?.invalid &&
+  registerForm.get('userName')?.touched) {
+  <p class="text-red-200">{{ getErrorMessages("userName") }}</p>
+  }
 
   <mat-form-field>
     <mat-label>Last Name</mat-label>
     <input formControlName="lastName" type="text" matInput required />
   </mat-form-field>
+  @if (registerForm.get('lastName')?.invalid &&
+  registerForm.get('lastName')?.touched) {
+  <p class="text-red-200">{{ getErrorMessages("lastName") }}</p>
+  }
 
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" type="email" matInput required />
   </mat-form-field>
+  @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched)
+  {
+  <p class="text-red-200">{{ getErrorMessages("email") }}</p>
+  }
 
   <mat-form-field>
     <mat-label>Password</mat-label>
     <input formControlName="password" type="password" matInput required />
   </mat-form-field>
+  @if (registerForm.get('password')?.invalid &&
+  registerForm.get('password')?.touched) {
+  <p class="text-red-200">{{ getErrorMessages("password") }}</p>
+  }
 
   <mat-form-field>
     <mat-label>Confirm Password</mat-label>
@@ -30,6 +46,10 @@
       required
     />
   </mat-form-field>
+  @if (registerForm.get('confirmPassword')?.invalid &&
+  registerForm.get('confirmPassword')?.touched) {
+  <p class="text-red-200">{{ getErrorMessages("confirmPassword") }}</p>
+  }
 
   <button (click)="register()" mat-stroked-button>Register</button>
 

@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHero } from '@heroes/interfaces/hero.interface';
 import { HeroesService } from '@heroes/services/heroes.service';
-import { pipe, Subscription, switchMap, tap } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'heroes-hero-page',
-  templateUrl: './hero-page.component.html',
-  styleUrl: './hero-page.component.css'
+  templateUrl: './hero-page.component.html'
 })
 export class HeroPageComponent implements OnInit, OnDestroy {
   private _subscribe?: Subscription;
