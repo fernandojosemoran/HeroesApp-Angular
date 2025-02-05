@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from "@env/environment";
 import { IHero, IHeroResponse } from '@heroes/interfaces/hero.interface';
 import { catchError, delay, map, Observable, of } from 'rxjs';

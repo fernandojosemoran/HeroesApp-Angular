@@ -4,7 +4,7 @@ import { AuthService } from '@auth/services/auth.service';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuardService implements CanMatch, CanActivate {
+export class PrivateAuthGuardService implements CanMatch, CanActivate {
 
   public constructor(
     private readonly _authService: AuthService,

@@ -50,9 +50,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
 
     // routing
-    HeroesRoutingModule,
-
-    // routes
     HeroesRoutingModule
   ],
   providers: [

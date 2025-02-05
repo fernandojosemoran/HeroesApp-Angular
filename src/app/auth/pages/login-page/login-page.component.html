@@ -2,19 +2,31 @@
   <h1 class="text-2xl mb-4">Login</h1>
 
   <mat-form-field>
-    <mat-label>User</mat-label>
+    <mat-label>UserName</mat-label>
     <input formControlName="userName" type="text" matInput />
   </mat-form-field>
+  @if (loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched)
+  {
+  <p class="text-red-200">{{ getErrorMessage("userName") }}</p>
+  }
 
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" type="email" matInput />
   </mat-form-field>
+  @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+  <p class="text-red-200">{{ getErrorMessage("email") }}</p>
+  }
 
   <mat-form-field>
     <mat-label>Password</mat-label>
     <input formControlName="password" type="password" matInput />
   </mat-form-field>
+
+  @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched)
+  {
+  <p class="text-red-200">{{ getErrorMessage("password") }}</p>
+  }
 
   <button (click)="login()" mat-stroked-button>Login</button>
 

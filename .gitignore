@@ -30,7 +30,7 @@ environment.prod.ts
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
-
+./src/environments/environment.prod.ts
 # Miscellaneous
 /.angular/cache
 .sass-cache/

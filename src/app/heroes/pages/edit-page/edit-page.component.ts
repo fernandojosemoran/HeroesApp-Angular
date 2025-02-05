@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHero, IPublisher } from '@heroes/interfaces/hero.interface';
 import { IPublisherOptions } from '@heroes/interfaces/publisher-options.interface';
-import { DialogService } from '@heroes/services/dialog.service';
+import { DialogService } from '@shared/services/dialog.service';
 import { HeroesService } from '@heroes/services/heroes.service';
-import { SnackBarService } from '@heroes/services/snackbar.service';
+import { SnackBarService } from '@shared/services/snackbar.service';
 import { Subscription, switchMap, tap } from 'rxjs';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'heroes-edit-page',
-  templateUrl: './edit-page.component.html',
-  styleUrl: './edit-page.component.css'
+  templateUrl: './edit-page.component.html'
 })
 export class EditPageComponent implements OnDestroy, OnInit {
   private readonly _subscribers?: Subscription[];
@@ -33,7 +33,10 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
       this.loader = true;
 
-      this.heroForm.setValue(hero);
+      this.heroForm.setValue({
+        ...hero,
+        alt_image: `${environment.backend_host}${hero.alt_image}`
+      });
 
       return;
     };
@@ -43,7 +46,10 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
       this.loader = false;
 
-      this.heroForm.patchValue(hero);
+      this.heroForm.patchValue({
+        ...hero,
+        alt_image: `${environment.backend_host}${hero.alt_image}`
+      });
     };
 
     this._activateRouter.params.pipe(
@@ -57,12 +63,12 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
   public heroForm: FormGroup = new FormGroup({
     id: new FormControl<string>(""),
-    alt_image: new FormControl<string>(""),
-    alter_ego: new FormControl<string>("", { nonNullable: true }),
-    characters: new FormControl<string>("", { nonNullable: true }),
-    first_appearance: new FormControl<string>("", { nonNullable: true }),
-    publisher: new FormControl<IPublisher>("" as IPublisher , { nonNullable: true }),
-    superhero: new FormControl<string>("", { nonNullable: true })
+    alt_image: new FormControl<string>("", { validators: [ environment.debug ? Validators.pattern(/^(http?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/): Validators.pattern(/^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/) ] }),
+    alter_ego: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(120) ] }),
+    characters: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(255) ] }),
+    first_appearance: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(80) ] }),
+    publisher: new FormControl<IPublisher>("" as IPublisher , { nonNullable: true, validators: [ Validators.required ] }),
+    superhero: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(120) ] })
   });
 
   public formControlFieldName: IHero = {
@@ -80,14 +86,26 @@ export class EditPageComponent implements OnDestroy, OnInit {
     { id: 'Marvel Comics', desc: 'Marvel - Comics' },
   ];
 
+  public getErrorMessage(field: string): string {
+    const control = this.heroForm.get(field);
+
+    console.log(control);
+    if (control?.hasError("required")) return `This field is required.`;
+    if (control?.hasError("minlength")) return `Must have at least ${control.errors?.["minlength"].requiredLength} characters.`;
+    if (control?.hasError("maxlength")) return `Should not exceed ${control.errors?.["maxlength"].requiredLength} characters.`;
+    if (control?.hasError("pattern")) return ``;
+
+    return "";
+  }
+
   public updateHero(): void {
     const hero: IHero = this.heroForm.value;
 
-    if (!this.heroForm.valid) return this._snackbarService.open(`There're fields within complete.`);
+    if (!this.heroForm.valid) return this._snackbarService.openUnsuccessSnackbar(`There're fields within complete.`);
 
     const subscriber: Subscription = this._heroesService.updateHero(hero)
       .subscribe((response)  => {
-        if (!response) return this._snackbarService.open("Sorry something occurred wrang.");
+        if (!response) return this._snackbarService.openUnsuccessSnackbar("Sorry something occurred wrang.");
 
         this._router.navigate([ `/heroes/${response}` ]);
       });
