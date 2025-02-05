@@ -56,10 +56,14 @@ export class AuthService implements IAuthService {
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     return this.httpPost<{ response: string | undefined}>(
 =======
     return this._http.post<{ response: string | undefined}>(
 >>>>>>> 71a485d (refactor: improved the .gitignore)
+=======
+    return this.httpPost<{ response: string | undefined}>(
+>>>>>>> 8b0876e (test: implemented jest library)
       "/auth/register",
       {
         userName,
