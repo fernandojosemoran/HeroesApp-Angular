@@ -62,8 +62,17 @@ export class AuthService implements IAuthService {
       }
     };
 
-    return this._http.post<{ response: string | undefined}>("/auth/register", { userName, lastName, email, password, confirmPassword }, config)
-    .pipe(map((response) => response!.response));
+    return this._http.post<{ response: string | undefined}>(
+      "/auth/register",
+      {
+        userName,
+        lastName,
+        email,
+        password,
+        confirmPassword
+      },
+      config
+    ).pipe(map((response) => response!.response));
   }
 
   public logout() {

@@ -27,6 +27,13 @@ export class EditPageComponent implements OnDestroy, OnInit {
   public loader = false;
 
   public ngOnInit(): void {
+    const urlSerializer = (alt_image: string): string => {
+
+      const regex = new RegExp("^/api/media/hero/[a-zA-Z0-9-]+\\.jpg$");
+      const isPathName: boolean = regex.test(alt_image);
+
+      return isPathName ? environment.backend_host + alt_image : alt_image;
+    };
 
     const handlerHeroPipe = (hero: IHero | undefined) => {
       if (!hero) return this._router.navigate([ "/heroes/list" ]);
@@ -35,7 +42,7 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
       this.heroForm.setValue({
         ...hero,
-        alt_image: `${environment.backend_host}${hero.alt_image}`
+        alt_image: urlSerializer(hero.alt_image)
       });
 
       return;
@@ -48,7 +55,7 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
       this.heroForm.patchValue({
         ...hero,
-        alt_image: `${environment.backend_host}${hero.alt_image}`
+        alt_image: urlSerializer(hero.alt_image)
       });
     };
 
@@ -103,18 +110,19 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
     if (!this.heroForm.valid) return this._snackbarService.openUnsuccessSnackbar(`There're fields within complete.`);
 
-    const subscriber: Subscription = this._heroesService.updateHero(hero)
-      .subscribe((response)  => {
-        if (!response) return this._snackbarService.openUnsuccessSnackbar("Sorry something occurred wrang.");
+    const heroResponse = (response: string | undefined) => {
+      if (!response) return this._snackbarService.openUnsuccessSnackbar("Sorry something occurred wrang.");
 
-        this._router.navigate([ `/heroes/${response}` ]);
-      });
+      this._router.navigate([ `/heroes/${response}` ]);
+    };
+
+    const subscriber: Subscription = this._heroesService.updateHero(hero).subscribe(heroResponse);
 
     this._subscribers?.push(subscriber);
   }
 
   public cancelHero(): void {
-    this._dialogService.open("You are sure of cancel.");
+    this._dialogService.open("You're sure of cancel.");
   }
 
   public ngOnDestroy(): void {
