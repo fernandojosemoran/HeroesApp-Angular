@@ -39,6 +39,7 @@ export class LayoutPageComponent {
     }
   ];
 
+  // TODO: Remove this method and implement the logout method in  auth service.ts
   public logOut(): void {
     this._http.post<{ response: boolean }>(`${environment.base_url_api}/auth/logout`, null, { withCredentials: true })
     .pipe(

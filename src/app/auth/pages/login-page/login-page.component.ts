@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ILoginUser } from '@heroes/interfaces/auth.interface';
 import { SnackBarService } from '@shared/services/snackbar.service';
 import { pipe } from 'rxjs';

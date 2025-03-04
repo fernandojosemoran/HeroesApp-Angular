@@ -22,11 +22,11 @@
     "lib": ["ES2022", "dom"],
     "baseUrl": "./src",
     "paths": {
-      "@auth/*": ["app/auth/*"],
+      "@auth/*": ["./app/auth/*"],
       "@material/*": ["app/material/*"],
-      "@heroes/*": ["app/heroes/*"],
-      "@shared/*": ["app/shared/*"],
-      "@env/*": ["environments/*"],
+      "@heroes/*": ["./app/heroes/*"],
+      "@shared/*": ["./app/shared/*"],
+      "@env/*": ["./environments/*"],
       "@/*": ["./*"]
     }
   },

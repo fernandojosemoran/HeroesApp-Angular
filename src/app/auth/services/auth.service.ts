@@ -55,11 +55,7 @@ export class AuthService implements IAuthService {
       }
     };
 
-<<<<<<< HEAD
     return this.httpPost<{ response: string | undefined}>(
-=======
-    return this._http.post<{ response: string | undefined}>(
->>>>>>> 71a485d (refactor: improved the .gitignore)
       "/auth/register",
       {
         userName,
@@ -72,6 +68,7 @@ export class AuthService implements IAuthService {
     ).pipe(map((response) => response!.response));
   }
 
+  // TODO - Implement the logout method
   public logout() {
     this.httpPost("/auth/logout");
   }
