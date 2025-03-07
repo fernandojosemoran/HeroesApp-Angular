@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IHero } from '@heroes/interfaces/hero.interface';
 import { HeroesService } from '@heroes/services/heroes.service';
-import { debounceTime, Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'heroes-search-page',

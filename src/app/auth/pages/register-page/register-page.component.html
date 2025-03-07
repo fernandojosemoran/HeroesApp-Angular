@@ -1,57 +1,107 @@
-<form [formGroup]="registerForm" (submit)="register()" class="flex flex-column">
+<form
+  [formGroup]="registerForm"
+  (submit)="register()"
+  role="form"
+  class="flex flex-column"
+>
   <h1 class="text-2xl mb-4">Register</h1>
 
   <mat-form-field>
     <mat-label>User Name</mat-label>
-    <input formControlName="userName" type="text" matInput required />
+    <input
+      formControlName="userName"
+      name="userName"
+      type="text"
+      matInput
+      required
+      aria-describedby="userName-error"
+    />
   </mat-form-field>
   @if (registerForm.get('userName')?.invalid &&
   registerForm.get('userName')?.touched) {
-  <p class="text-red-200">{{ getErrorMessages("userName") }}</p>
+  <p id="userName-error" role="alert" class="text-red-200" aria-live="polite">
+    {{ getErrorMessage("userName") }}
+  </p>
   }
 
   <mat-form-field>
     <mat-label>Last Name</mat-label>
-    <input formControlName="lastName" type="text" matInput required />
+    <input
+      formControlName="lastName"
+      name="lastName"
+      type="text"
+      matInput
+      required
+      aria-describedby="lastName-error"
+    />
   </mat-form-field>
   @if (registerForm.get('lastName')?.invalid &&
   registerForm.get('lastName')?.touched) {
-  <p class="text-red-200">{{ getErrorMessages("lastName") }}</p>
+  <p id="lastName-error" role="alert" class="text-red-200" aria-live="polite">
+    {{ getErrorMessage("lastName") }}
+  </p>
   }
 
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input formControlName="email" type="email" matInput required />
+    <input
+      formControlName="email"
+      name="email"
+      type="email"
+      matInput
+      required
+      aria-describedby="email-error"
+    />
   </mat-form-field>
   @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched)
   {
-  <p class="text-red-200">{{ getErrorMessages("email") }}</p>
+  <p id="email-error" role="alert" class="text-red-200" aria-live="polite">
+    {{ getErrorMessage("email") }}
+  </p>
   }
 
   <mat-form-field>
     <mat-label>Password</mat-label>
-    <input formControlName="password" type="password" matInput required />
+    <input
+      formControlName="password"
+      name="password"
+      type="password"
+      matInput
+      required
+      aria-describedby="password-error"
+    />
   </mat-form-field>
   @if (registerForm.get('password')?.invalid &&
   registerForm.get('password')?.touched) {
-  <p class="text-red-200">{{ getErrorMessages("password") }}</p>
+  <p id="password-error" role="alert" class="text-red-200" aria-live="polite">
+    {{ getErrorMessage("password") }}
+  </p>
   }
 
   <mat-form-field>
     <mat-label>Confirm Password</mat-label>
     <input
       formControlName="confirmPassword"
+      name="confirmPassword"
       type="password"
       matInput
       required
+      aria-describedby="confirmPassword-error"
     />
   </mat-form-field>
   @if (registerForm.get('confirmPassword')?.invalid &&
   registerForm.get('confirmPassword')?.touched) {
-  <p class="text-red-200">{{ getErrorMessages("confirmPassword") }}</p>
+  <p
+    id="confirmPassword-error"
+    role="alert"
+    class="text-red-200"
+    aria-live="polite"
+  >
+    {{ getErrorMessage("confirmPassword") }}
+  </p>
   }
 
-  <button (click)="register()" mat-stroked-button>Register</button>
+  <button type="submit" mat-stroked-button>Register</button>
 
   <div class="flex justify-content-end mt-5">
     <a routerLink="/auth/login">You already have an account?</a>

@@ -5,7 +5,8 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jest"
+      "jest",
+      "@testing-library/jest-dom"
     ],
     "esModuleInterop": true, // 2
     "emitDecoratorMetadata": true // 3

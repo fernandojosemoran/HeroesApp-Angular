@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IHero, IPublisher } from '@heroes/interfaces/hero.interface';
 import { DialogService } from '@shared/services/dialog.service';
 import { HeroesService, HeroResponseType } from '@heroes/services/heroes.service';
-import { SnackBarService } from '@shared/services/snackbar.service';
+import { SnackBarService } from '../../../shared/services/snackbar.service';
 import { Subscription } from 'rxjs';
 import { environment } from '@env/environment';
 

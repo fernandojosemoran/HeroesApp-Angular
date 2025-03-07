@@ -5,7 +5,7 @@ import { IHero, IPublisher } from '@heroes/interfaces/hero.interface';
 import { IPublisherOptions } from '@heroes/interfaces/publisher-options.interface';
 import { DialogService } from '@shared/services/dialog.service';
 import { HeroesService } from '@heroes/services/heroes.service';
-import { SnackBarService } from '@shared/services/snackbar.service';
+import { SnackBarService } from '../../../shared/services/snackbar.service';
 import { Subscription, switchMap, tap } from 'rxjs';
 import { environment } from '@env/environment';
 

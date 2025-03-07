@@ -41,6 +41,7 @@ module.exports = tseslint.config(
       //     style: "kebab-case",
       //   },
       // ],
+      "eslint@angular-eslint/directive-selector": "off"
     },
   },
   {

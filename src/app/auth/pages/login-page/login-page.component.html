@@ -7,7 +7,7 @@
   </mat-form-field>
   @if (loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched)
   {
-  <p class="text-red-200">{{ getErrorMessage("userName") }}</p>
+  <p role="alert" class="text-red-200">{{ getErrorMessage("userName") }}</p>
   }
 
   <mat-form-field>
@@ -15,7 +15,7 @@
     <input formControlName="email" type="email" matInput />
   </mat-form-field>
   @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-  <p class="text-red-200">{{ getErrorMessage("email") }}</p>
+  <p role="alert" class="text-red-200">{{ getErrorMessage("email") }}</p>
   }
 
   <mat-form-field>
@@ -25,12 +25,12 @@
 
   @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched)
   {
-  <p class="text-red-200">{{ getErrorMessage("password") }}</p>
+  <p role="alert" class="text-red-200">{{ getErrorMessage("password") }}</p>
   }
 
   <button (click)="login()" mat-stroked-button>Login</button>
 
   <div class="flex justify-content-end mt-5">
-    <a routerLink="/auth/register">Create a account?</a>
+    <a routerLink="/auth/register">Create an account?</a>
   </div>
 </form>
