@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHero, IPublisher } from '@heroes/interfaces/hero.interface';
 import { IPublisherOptions } from '@heroes/interfaces/publisher-options.interface';
-import { DialogService } from '@shared/services/dialog.service';
-import { HeroesService } from '@heroes/services/heroes.service';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { HeroesService } from '../../services/heroes.service';
 import { SnackBarService } from '../../../shared/services/snackbar.service';
 import { Subscription, switchMap, tap } from 'rxjs';
 import { environment } from '@env/environment';
@@ -15,6 +15,36 @@ import { environment } from '@env/environment';
 })
 export class EditPageComponent implements OnDestroy, OnInit {
   private readonly _subscribers?: Subscription[];
+
+  private readonly _alt_image_validators: ValidatorFn[] = [
+    environment.debug ?
+    Validators.pattern(/^(http?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/):
+    Validators.pattern(/^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/)
+  ];
+
+  private readonly _alter_ego_validators: ValidatorFn[] = [
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(120)
+  ];
+
+  private readonly _charactersValidators: ValidatorFn[] = [
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(200)
+  ];
+
+  private readonly first_appearance: ValidatorFn[] = [
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(80)
+  ];
+
+  private readonly _superheroValidators: ValidatorFn[] = [
+    Validators.required,
+    Validators.minLength(4),
+    Validators.maxLength(120)
+  ];
 
   public constructor(
     private readonly _heroesService: HeroesService,
@@ -70,12 +100,12 @@ export class EditPageComponent implements OnDestroy, OnInit {
 
   public heroForm: FormGroup = new FormGroup({
     id: new FormControl<string>(""),
-    alt_image: new FormControl<string>("", { validators: [ environment.debug ? Validators.pattern(/^(http?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/): Validators.pattern(/^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/) ] }),
-    alter_ego: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(120) ] }),
-    characters: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(255) ] }),
-    first_appearance: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(80) ] }),
+    alt_image: new FormControl<string>("", { validators: this._alt_image_validators }),
+    alter_ego: new FormControl<string>("", { nonNullable: true, validators: this._alter_ego_validators }),
+    characters: new FormControl<string>("", { nonNullable: true, validators: this._charactersValidators }),
+    first_appearance: new FormControl<string>("", { nonNullable: true, validators: this.first_appearance }),
     publisher: new FormControl<IPublisher>("" as IPublisher , { nonNullable: true, validators: [ Validators.required ] }),
-    superhero: new FormControl<string>("", { nonNullable: true, validators: [ Validators.required, Validators.minLength(4), Validators.maxLength(120) ] })
+    superhero: new FormControl<string>("", { nonNullable: true, validators: this._superheroValidators })
   });
 
   public formControlFieldName: IHero = {
@@ -96,7 +126,6 @@ export class EditPageComponent implements OnDestroy, OnInit {
   public getErrorMessage(field: string): string {
     const control = this.heroForm.get(field);
 
-    console.log(control);
     if (control?.hasError("required")) return `This field is required.`;
     if (control?.hasError("minlength")) return `Must have at least ${control.errors?.["minlength"].requiredLength} characters.`;
     if (control?.hasError("maxlength")) return `Should not exceed ${control.errors?.["maxlength"].requiredLength} characters.`;

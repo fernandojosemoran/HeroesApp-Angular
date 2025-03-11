@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { DialogComponent } from '@heroes/components/dialog/dialog.component';
+import { DialogComponent } from '../../heroes/components/dialog/dialog.component';
 
 interface IDialogService {
   open(data: any): void;

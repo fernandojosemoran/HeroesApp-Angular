@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { IHero } from '@heroes/interfaces/hero.interface';
-import { HeroesService } from '@heroes/services/heroes.service';
+import { HeroesService } from '../../services/heroes.service';
 import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHero } from '@heroes/interfaces/hero.interface';
-import { HeroesService } from '@heroes/services/heroes.service';
+import { HeroesService } from '../../services/heroes.service';
 import { Subscription, switchMap } from 'rxjs';
 
 @Component({

@@ -9,74 +9,144 @@
         <mat-card-content>
           <form [formGroup]="heroForm" class="grid">
             <mat-form-field class="col-12">
-              <mat-label>Super Hero</mat-label>
+              <mat-label for="superhero">Super Hero</mat-label>
               <input
                 type="text"
                 [formControlName]="formControlFieldName.superhero"
+                name="superhero"
+                id="superhero"
                 matInput
                 required
+                [attr.aria-invalid]="
+                  heroForm.get('superhero')?.invalid &&
+                  heroForm.get('superhero')?.touched
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  heroForm.get('superhero')?.invalid &&
+                  heroForm.get('superhero')?.touched
+                    ? 'superhero-error'
+                    : null
+                "
               />
             </mat-form-field>
             @if (heroForm.get('superhero')?.invalid &&
             heroForm.get('superhero')?.touched) {
-            <p class="text-red-200 col-12">
+            <p class="text-red-200 col-12" id="superhero-error">
               {{ getErrorMessage("superhero") }}
             </p>
             }
 
             <mat-form-field class="col-12">
-              <mat-label>Alter Ego</mat-label>
+              <mat-label for="alter_ego">Alter Ego</mat-label>
               <input
                 type="text"
                 [formControlName]="formControlFieldName.alter_ego"
+                name="alter_ego"
+                id="alter_ego"
                 matInput
                 required
+                [attr.aria-invalid]="
+                  heroForm.get('alter_ego')?.invalid &&
+                  heroForm.get('alter_ego')?.touched
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  heroForm.get('alter_ego')?.invalid &&
+                  heroForm.get('alter_ego')?.touched
+                    ? 'alter_ego-error'
+                    : null
+                "
               />
             </mat-form-field>
             @if (heroForm.get('alter_ego')?.invalid &&
             heroForm.get('alter_ego')?.touched) {
-            <p class="text-red-200 col-12">
+            <p class="text-red-200 col-12" id="alter_ego-error">
               {{ getErrorMessage("alter_ego") }}
             </p>
             }
 
             <mat-form-field class="col-12">
-              <mat-label>First Appearance</mat-label>
+              <mat-label for="first_appearance">First Appearance</mat-label>
               <input
                 type="text"
                 [formControlName]="formControlFieldName.first_appearance"
+                name="first_appearance"
+                id="first_appearance"
                 matInput
                 required
+                [attr.aria-invalid]="
+                  heroForm.get('first_appearance')?.invalid &&
+                  heroForm.get('first_appearance')?.touched
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  heroForm.get('first_appearance')?.invalid &&
+                  heroForm.get('first_appearance')?.touched
+                    ? 'first_appearance-error'
+                    : null
+                "
               />
             </mat-form-field>
             @if (heroForm.get('first_appearance')?.invalid &&
             heroForm.get('first_appearance')?.touched) {
-            <p class="text-red-200 col-12">
+            <p class="text-red-200 col-12" id="first_appearance-error">
               {{ getErrorMessage("first_appearance") }}
             </p>
             }
 
             <mat-form-field class="col-12">
-              <mat-label>Characters</mat-label>
+              <mat-label for="characters">Characters</mat-label>
               <input
                 type="text"
                 [formControlName]="formControlFieldName.characters"
+                name="characters"
+                id="characters"
                 matInput
                 required
+                [attr.aria-invalid]="
+                  heroForm.get('characters')?.invalid &&
+                  heroForm.get('characters')?.touched
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  heroForm.get('characters')?.invalid &&
+                  heroForm.get('characters')?.touched
+                    ? 'characters-error'
+                    : null
+                "
               />
             </mat-form-field>
             @if (heroForm.get('characters')?.invalid &&
             heroForm.get('characters')?.touched) {
-            <p class="text-red-200 col-12">
+            <p class="text-red-200 col-12" id="characters-error">
               {{ getErrorMessage("characters") }}
             </p>
             }
 
             <mat-form-field class="col-12">
-              <mat-label>Publisher</mat-label>
+              <mat-label for="publisher">Publisher</mat-label>
               <mat-select
                 required
                 [formControlName]="formControlFieldName.publisher"
+                id="publisher"
+                aria-roledescription="select an enterprise"
+                [attr.aria-invalid]="
+                  heroForm.get('publisher')?.invalid &&
+                  heroForm.get('publisher')?.touched
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  heroForm.get('publisher')?.invalid &&
+                  heroForm.get('publisher')?.touched
+                    ? 'publisher-error'
+                    : null
+                "
               >
                 @for (publisher of publishers; track $index) {
                 <mat-option [value]="publisher.id">
@@ -87,33 +157,57 @@
             </mat-form-field>
             @if (heroForm.get('publisher')?.invalid &&
             heroForm.get('publisher')?.touched) {
-            <p class="text-red-200 col-12">
+            <p class="text-red-200 col-12" id="publisher-error">
               {{ getErrorMessage("publisher") }}
             </p>
             }
 
             <mat-form-field class="col-12">
-              <mat-label>Alt_image</mat-label>
+              <mat-label for="alt_image">Alt image</mat-label>
               <input
                 matInput
                 type="text"
                 [formControlName]="formControlFieldName.alt_image"
+                name="alt_image"
+                id="alt_image"
                 required
+                [attr.aria-invalid]="
+                  heroForm.get('alt_image')?.invalid &&
+                  heroForm.get('alt_image')?.touched
+                    ? true
+                    : null
+                "
+                [attr.aria-describedby]="
+                  heroForm.get('alt_image')?.invalid &&
+                  heroForm.get('alt_image')?.touched
+                    ? 'alt_image-error'
+                    : null
+                "
               />
             </mat-form-field>
             @if (heroForm.get('alt_image')?.invalid &&
             heroForm.get('alt_image')?.touched) {
-            <p class="text-red-200 col-12">
+            <p class="text-red-200 col-12" id="alt_image-error">
               {{ getErrorMessage("alt_image") }}
             </p>
             }
           </form>
 
           <div class="flex justify-content-evenly">
-            <button (click)="cancelHero()" mat-flat-button color="warn">
+            <button
+              (click)="cancelHero()"
+              mat-flat-button
+              color="warn"
+              aria-label="Cancel hero edition"
+            >
               cancel
             </button>
-            <button (click)="updateHero()" mat-flat-button color="primary">
+            <button
+              (click)="updateHero()"
+              mat-flat-button
+              color="primary"
+              aria-label="Save hero changes"
+            >
               Save
             </button>
           </div>

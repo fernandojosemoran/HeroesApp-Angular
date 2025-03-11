@@ -12,7 +12,7 @@ export class HeroesService {
   private readonly BASE_URL: string = environment.base_url_api;
 
   public constructor(
-    private readonly _http: Http
+    private readonly _http: HttpClient
   ) { }
 
   public existHero(id: string): boolean {
@@ -27,7 +27,9 @@ export class HeroesService {
   public getHeroes(): Observable<IHero[] | undefined> {
     const url = `${this.BASE_URL}/hero/heroes-list`;
 
-    return this._http.get<IHeroResponse>(url).pipe(map(heroResponse => heroResponse?.response as IHero[]));
+    return this._http.get<IHeroResponse>(url)
+      .pipe(catchError(() => of(undefined)))
+      .pipe(map(heroResponse => heroResponse?.response as IHero[]));
   }
 
   public searchHero(name: string): Observable<IHero[] | undefined> {
@@ -47,6 +49,7 @@ export class HeroesService {
 
   public getHeroById(id: string): Observable<IHero | undefined> {
     return this.getHeroes()
+      .pipe(catchError(() => of(undefined)))
       .pipe(
         map((heroes) => heroes!.find((hero) => hero.id === id)),
         delay(1000)
@@ -54,45 +57,14 @@ export class HeroesService {
   }
 
   public addHero(hero: IHero): Observable<HeroResponseType> {
-    return this._http.post<IHeroResponse>(`${this.BASE_URL}/hero/create`, hero).pipe(map(heroResponse => heroResponse?.response));
+    return this._http.post<IHeroResponse>(`${this.BASE_URL}/hero/create`, hero)
+    .pipe(catchError(() => of(undefined)))
+    .pipe(map(heroResponse => heroResponse?.response));
   }
 
   public updateHero(hero: IHero): Observable<string | undefined> {
-    return this._http.put<IHeroResponse>(`${this.BASE_URL}/hero/update/${hero.id}`, hero).pipe(map(heroResponse => heroResponse?.response as string));
-  }
-}
-
-@Injectable({ providedIn: "root" })
-class Http {
-  public constructor(
-    private _http: HttpClient,
-  ) { }
-
-  public get<T>(url: string): Observable<T | undefined> {
-    return this._http.get<T>(url)
-      .pipe(
-        catchError(() => of(undefined))
-      );
-  }
-
-  public post<T>(url: string, hero: IHero): Observable<T | undefined> {
-    return this._http.post<T>(url, hero)
-      .pipe(
-        catchError(() => of(undefined))
-      );
-  }
-
-  public put<T>(url: string, hero: IHero): Observable<T | undefined> {
-    return this._http.put<T>(url, hero)
-      .pipe(
-        catchError(() => of(undefined))
-      );
-  }
-
-  public delete<T>(url: string, hero: IHero): Observable<T | undefined> {
-    return this._http.post<T>(url, hero)
-      .pipe(
-        catchError(() => of(undefined))
-      );
+    return this._http.put<IHeroResponse>(`${this.BASE_URL}/hero/update/${hero.id}`, hero)
+    .pipe(catchError(() => of(undefined)))
+    .pipe(map(heroResponse => heroResponse?.response as string));
   }
 }

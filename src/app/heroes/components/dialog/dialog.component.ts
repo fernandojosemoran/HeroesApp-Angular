@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DialogService } from '@shared/services/dialog.service';
+import { DialogService } from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'heroes-dialog',
