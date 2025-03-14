@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IHero } from '@heroes/interfaces/hero.interface';
 import { HeroesService } from '../../services/heroes.service';
-import { Subscription, switchMap } from 'rxjs';
+import { of, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'heroes-hero-page',
@@ -22,14 +22,15 @@ export class HeroPageComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._activatedRoute.params
-      .pipe(
-        switchMap(({ id }) => {
+    .pipe(
+      switchMap(({ id }) => {
           if (!id) return this._router.navigateByUrl("/heroes/list");
 
           this._id = id;
-          return Promise.resolve(true);
-        }))
-      .subscribe();
+          return of(true);
+      })
+    )
+    .subscribe();
 
     this._subscribe = this._heroService.getHeroById(this._id!)
       .subscribe(
@@ -39,7 +40,7 @@ export class HeroPageComponent implements OnInit, OnDestroy {
           this.hero = hero;
           return;
         }
-      );
+    );
   }
 
   public goBack(): void {

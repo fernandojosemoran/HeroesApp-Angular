@@ -1,8 +1,12 @@
 <ng-template #divLoading>
   <div
     class="flex w-full h-screen align-items-center justify-content-center align-content-center"
+    role="status"
+    aria-live="polite"
+    aria-label="Loading hero information"
   >
-    <mat-spinner></mat-spinner>
+    <mat-spinner aria-hidden="true"></mat-spinner>
+    <span class="sr-only">Loading...</span>
   </div>
 </ng-template>
 
@@ -12,35 +16,45 @@
       [src]="hero | heroImageUrl"
       [alt]="hero.superhero"
       class="w-26rem sm:w-27rem"
+      role="img"
+      attr.aria-label="{{ hero.superhero }} image"
     />
   </div>
 
   <div class="col-12 sm:col-4">
-    <mat-list>
+    <mat-list aria-label="Hero details">
       <mat-list-item>
-        Superhero: <mat-chip>{{ hero.superhero }}</mat-chip>
+        <span>Superhero:</span>
+        <mat-chip aria-label="Superhero name">{{ hero.superhero }}</mat-chip>
       </mat-list-item>
 
       <mat-list-item>
-        Alter_ego: <mat-chip>{{ hero.alter_ego }}</mat-chip>
+        <span>Alter ego:</span>
+        <mat-chip aria-label="Alter ego name">{{ hero.alter_ego }}</mat-chip>
       </mat-list-item>
 
       <mat-list-item>
-        First appearance: <mat-chip>{{ hero.first_appearance }}</mat-chip>
+        <span>First appearance:</span>
+        <mat-chip aria-label="First appearance date">{{
+          hero.first_appearance
+        }}</mat-chip>
       </mat-list-item>
 
       <mat-list-item>
-        Publisher: <mat-chip>{{ hero.publisher }}</mat-chip>
+        <span>Publisher:</span>
+        <mat-chip aria-label="Publisher name">{{ hero.publisher }}</mat-chip>
       </mat-list-item>
 
       <mat-list-item>
-        Characters: <mat-chip>{{ hero.characters }}</mat-chip>
+        <span>Characters:</span>
+        <mat-chip aria-label="Characters">{{ hero.characters }}</mat-chip>
       </mat-list-item>
     </mat-list>
 
+    <!-- Back button -->
     <div>
-      <button mat-button (click)="goBack()">
-        <mat-icon>arrow_back_ios</mat-icon>
+      <button mat-button (click)="goBack()" aria-label="Go back to heroes list">
+        <mat-icon aria-hidden="true">arrow_back_ios</mat-icon>
         Go back
       </button>
     </div>

@@ -4,7 +4,6 @@ import { NewHeroPageComponent } from '../new-hero/new-hero.component';
 import { HeroPageComponent } from '../hero-page/hero-page.component';
 import { ListPageComponent } from '../list-page/list-page.component';
 import { HeroCardComponent } from '../../components/hero-card/hero-card.component';
-import { IPublisher } from '../../interfaces/hero.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackBarService } from '../../../shared/services/snackbar.service';
@@ -19,14 +18,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import userEvent from '@testing-library/user-event';
-import { waitFor } from '@testing-library/dom';
+import { IHero } from '@heroes/interfaces/hero.interface';
 
 describe('./src/app/heroes/pages/edit-page/edit-page.component.spec.ts', () => {
-  const heroUpdateResponse = "jest is amazing";
 
   let heroesServiceMock: HeroesService;
   let routerMock: Router;
@@ -34,7 +32,7 @@ describe('./src/app/heroes/pages/edit-page/edit-page.component.spec.ts', () => {
   let dialogServiceMock: DialogService;
   let activateRouterMock: ActivatedRoute;
   let heroesService: HeroesService;
-  let httpTesting: HttpTestingController;
+  // let httpTesting: HttpTestingController;
 
   let renderOptions: RenderComponentOptions<EditPageComponent>;
 
@@ -63,6 +61,8 @@ describe('./src/app/heroes/pages/edit-page/edit-page.component.spec.ts', () => {
     activateRouterMock = {
       params: of({ id: 'testId' }),
     } as unknown as ActivatedRoute;
+
+    heroesService = heroesServiceMock;
 
     renderOptions = {
       declarations: [
@@ -436,33 +436,35 @@ describe('./src/app/heroes/pages/edit-page/edit-page.component.spec.ts', () => {
       expect(snackbarServiceMock.openUnsuccessSnackbar).toHaveBeenCalledWith("There're fields within complete.");
     });
 
-    // test('Should save button to call navigate method from Router', async () => {
-    //   const screen = await render(EditPageComponent, renderOptions);
+    test('Should save button to call navigate method from Router', async () => {
+      const heroUpdateResponse = "super-test";
 
-    //   const superheroInputElement: HTMLElement = await screen.getByRole('textbox', { name: /Super\sHero/i });
-    //   const alterEgoInputElement: HTMLElement = await screen.getByRole('textbox', { name: /Alter\sEgo/i });
-    //   const firstAppearanceInputElement: HTMLElement = await screen.getByRole('textbox', { name: /First\sAppearance/i });
-    //   const charactersInputElement: HTMLElement = await screen.getByRole('textbox', { name: /characters/i });
-    //   const altImageInputElement: HTMLElement = await screen.getByRole('textbox', { name: /Alt\sImage/i });
-    //   const saveButtonElement: HTMLElement = await screen.getByRole('button', { name: /save/i });
-    //   const publisherComboBox: HTMLElement = await screen.getByRole('combobox', { name: /Publisher/i });
+      jest.spyOn(heroesServiceMock, "updateHero").mockReturnValue(of(heroUpdateResponse));
 
-    //   await userEvent.type(superheroInputElement, 'test');
-    //   await userEvent.type(alterEgoInputElement, 'jest');
-    //   await userEvent.type(firstAppearanceInputElement, 'jest comic #40');
-    //   await userEvent.type(charactersInputElement, 'jest, mock, spyOn, beforeEach, beforeAfter');
+      const screen = await render(EditPageComponent, renderOptions);
 
-    //   await userEvent.selectOptions(publisherComboBox, "DC-Comics");
+      const superheroInputElement: HTMLElement = await screen.getByRole('textbox', { name: /Super\sHero/i });
+      const alterEgoInputElement: HTMLElement = await screen.getByRole('textbox', { name: /Alter\sEgo/i });
+      const firstAppearanceInputElement: HTMLElement = await screen.getByRole('textbox', { name: /First\sAppearance/i });
+      const charactersInputElement: HTMLElement = await screen.getByRole('textbox', { name: /characters/i });
+      const altImageInputElement: HTMLElement = await screen.getByRole('textbox', { name: /Alt\sImage/i });
+      const saveButtonElement: HTMLElement = await screen.getByRole('button', { name: /save/i });
+      const publisherComboBox: HTMLElement = await screen.getByRole('combobox', { name: /Publisher/i });
 
-    //   // const publisherComboBoxOption: HTMLElement = await waitFor(() => screen.getByRole('option', { name: /DC\s-\sComics/i }));
+      // TODO: change this code line and refactor using testing library
+      publisherComboBox.textContent = "DC - Comics";
 
-    //   // await userEvent.click(publisherComboBoxOption);
+      await userEvent.type(superheroInputElement, 'test');
+      await userEvent.type(alterEgoInputElement, 'jest');
+      await userEvent.type(firstAppearanceInputElement, 'jest comic #40');
+      await userEvent.type(charactersInputElement, 'jest, mock, spyOn, beforeEach, beforeAfter');
 
-    //   await userEvent.type(altImageInputElement, 'https://test-jest.com/image/test-image.jpg');
 
-    //   await userEvent.click(saveButtonElement);
+      await userEvent.type(altImageInputElement, 'https://test-jest.com/image/test-image.jpg');
 
-    //   expect(routerMock.navigate).toHaveBeenCalledWith([ '/heroes/1' ]);
-    // }, 10000);
+      await userEvent.click(saveButtonElement);
+
+      heroesService.updateHero({} as IHero).subscribe(response => expect(routerMock.navigate).toHaveBeenCalledWith([ `/heroes/${response}` ]));
+    }, 10000);
 });
 
