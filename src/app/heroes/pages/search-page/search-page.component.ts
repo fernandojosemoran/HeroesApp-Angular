@@ -20,7 +20,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   ) { }
 
   public heroes: IHero[] = [];
-  public heroesText = [ "spider man", "hulk" ];
+
   public fmControlSearchInput: FormControl = new FormControl('');
 
   public loader = false;
@@ -43,17 +43,17 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   private searchHero(query: string): void {
     this._subscriber = this.heroesService.searchHero(query)
-      .subscribe(heroes => {
-        if (!heroes) return;
+    .subscribe(heroes => {
+      if (!heroes) return;
 
-        this.heroes = heroes;
-        this.loader = false;
-      });
+      this.heroes = heroes;
+      this.loader = false;
+    });
   }
 
   public ngOnDestroy(): void {
-    this._subscriber!.unsubscribe();
-    this._debounceSubscription!.unsubscribe();
+    this._subscriber?.unsubscribe();
+    this._debounceSubscription?.unsubscribe();
   }
 
   public onSelectedOption(event: MatAutocompleteSelectedEvent): void {
@@ -64,10 +64,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.fmControlSearchInput.setValue(heroSelected.superhero);
 
     this.heroesService.getHeroById(heroSelected.id)
-      .subscribe((hero) => {
-        if (!hero) return;
+    .subscribe((hero) => {
+      if (!hero) return;
 
-        this.heroes = [ hero ];
-      });
+      this.heroes = [ hero ];
+    });
   }
 }

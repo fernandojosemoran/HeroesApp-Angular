@@ -32,8 +32,6 @@ describe('./src/app/heroes/pages/edit-page/edit-page.component.spec.ts', () => {
   let dialogServiceMock: DialogService;
   let activateRouterMock: ActivatedRoute;
   let heroesService: HeroesService;
-  // let httpTesting: HttpTestingController;
-
   let renderOptions: RenderComponentOptions<EditPageComponent>;
 
   beforeEach(() => {
