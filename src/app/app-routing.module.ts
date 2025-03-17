@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Error404PageComponent } from './shared/pages/error-404-page/error-404-page.component';
-import { HomePageComponent } from './shared/pages/home-page/home-page.component';
 import { PrivateAuthGuardService } from '@auth/guards/private-auth.guard';
 import { PublicAuthGuardService } from '@auth/guards/public-auth.guard';
+import { PublicAuthorizationAccountGuard } from '@auth/guards/public-auth-authorization-account.guard';
 
 const routes: Routes = [
   {
     path: "",
-    component: HomePageComponent,
-    pathMatch: "full"
+    pathMatch: "full",
+    redirectTo: "/auth/register"
   },
   {
     path: "auth",
@@ -25,7 +25,9 @@ const routes: Routes = [
   },
   {
     path: "**",
-    component: Error404PageComponent
+    component: Error404PageComponent,
+    canActivate: [ PublicAuthorizationAccountGuard ],
+    canMatch: [ PublicAuthorizationAccountGuard ]
   }
 ];
 

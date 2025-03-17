@@ -7,6 +7,8 @@ import { catchError, map, Observable, of } from 'rxjs';
 interface IAuthService {
   login(userName: string, email: string, password: string): Observable<ILoginUser | string>;
   refreshToken(): Observable<boolean>;
+  logout(): void;
+  register(userName: string, email: string,lastName: string,password: string,confirmPassword: string): Observable<string | undefined>;
 }
 
 interface IHttpHandlerOptions {
@@ -21,8 +23,6 @@ interface IHttpHandlerOptions {
       includeHeaders?: string[];
   } | boolean;
 }
-
-
 @Injectable({ providedIn: 'root' })
 export class AuthService implements IAuthService {
   private readonly _baseUrl: string = environment.base_url_api;
@@ -33,9 +33,7 @@ export class AuthService implements IAuthService {
 
   private httpPost<T>(hostName: string, object?: unknown, config?: IHttpHandlerOptions): Observable<T | undefined> {
     return this._http.post<T>(`${this._baseUrl}${hostName}`, object, config)
-    .pipe(
-      catchError((error: HttpErrorResponse) => of(error.error))
-    );
+    .pipe(catchError((error: HttpErrorResponse) => of(error.error)));
   }
 
   public login(userName: string, email: string, password: string): Observable<ILoginUser | string> {
@@ -51,6 +49,7 @@ export class AuthService implements IAuthService {
     const config: IHttpHandlerOptions = {
       withCredentials: true,
       headers: {
+        Authorization: "True",
         "Content-Type": "application/json"
       }
     };
@@ -68,15 +67,22 @@ export class AuthService implements IAuthService {
     ).pipe(map((response) => response!.response));
   }
 
-  // TODO - Implement the logout method
-  public logout() {
-    this.httpPost("/auth/logout");
+  public logout(): Observable<boolean> {
+    const config: IHttpHandlerOptions = {
+      withCredentials: true,
+      headers: {
+        Authorization: "True",
+        "Content-Type": "application/json"
+      }
+    };
+
+    return this.httpPost("/auth/logout", null, config).pipe(map((res) => !!res));
   }
 
   public refreshToken(): Observable<boolean> {
-    const config: IHttpHandlerOptions = {
+
+    const config = {
       withCredentials: true,
-      reportProgress: true,
       headers: {
         Authorization: "True",
         "Content-Type": "application/json"

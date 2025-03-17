@@ -433,4 +433,18 @@ describe('./src/app/auth/pages/register-page/register-page.component.ts', () => 
       expect(loginLink).toBeInTheDocument();
       expect(loginLink).toHaveAttribute("href", "/auth/login");
     });
+
+    // test("Should register method call navigate to login form if register went success", async () => {
+    //   const registerMock = authServiceMock.register = jest.fn().mockReturnValue(of("true"));
+
+    //   const screen = await render(RegisterPageComponent, renderConfig);
+
+    //   const registerButtonElement: HtmlElement = await screen.getByRole("button", { name: "Register" });
+
+    //   await userEvent.clear(registerButtonElement);
+
+    //   expect(router.navigate).toHaveBeenCalledWith([ "/auth/login" ]);
+
+    //   registerMock.mockReset();
+    // });
 });

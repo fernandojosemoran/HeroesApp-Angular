@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { SnackBarService } from '../../../shared/services/snackbar.service';
 import { pipe } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface IRegisterField {
   userName: string;
@@ -19,7 +20,8 @@ interface IRegisterField {
 export class RegisterPageComponent {
   public constructor(
     private readonly _authService: AuthService,
-    private readonly _snackbarService: SnackBarService
+    private readonly _snackbarService: SnackBarService,
+    private readonly _router: Router
   ) {}
 
   private readonly _userNameValidations = [
@@ -63,8 +65,6 @@ export class RegisterPageComponent {
     return '';
   }
 
-  // "minlength" | "maxlength" | "email" | "password" | "required";
-
   public register(): void {
     const {
       userName,
@@ -77,7 +77,13 @@ export class RegisterPageComponent {
     if (!this.registerForm.valid) return;
 
     this._authService.register(userName, email, lastName, password, confirmPassword)
-    .subscribe(pipe((response) => response && this._snackbarService.openUnsuccessSnackbar(response)));
+    .subscribe(
+      pipe((response) => {
+        if (typeof response === "boolean" && response === true) return this._router.navigate([ "/auth/login" ]);
+
+        return response && this._snackbarService.openUnsuccessSnackbar(response);
+      })
+    );
   }
 }
 

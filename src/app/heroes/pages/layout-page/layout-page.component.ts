@@ -1,8 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '@env/environment';
-import { catchError, of, tap } from 'rxjs';
+import { AuthService } from '@auth/services/auth.service';
 
 interface ISidebarItem {
   label: string;
@@ -17,8 +15,8 @@ interface ISidebarItem {
 })
 export class LayoutPageComponent {
   public constructor(
-    private readonly _http: HttpClient,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private readonly _authServices: AuthService
   ) {}
 
   public sidebarItem: ISidebarItem[] = [
@@ -41,10 +39,6 @@ export class LayoutPageComponent {
 
   // TODO: Remove this method and implement the logout method in  auth service.ts
   public logOut(): void {
-    this._http.post<{ response: boolean }>(`${environment.base_url_api}/auth/logout`, null, { withCredentials: true })
-    .pipe(
-      catchError((error: HttpErrorResponse) => of(error.error)),
-      tap(({ response }) => response && this._router.navigate([ "/auth/login" ]))
-    ).subscribe();
+    this._authServices.logout().subscribe((response) => response && this._router.navigate([ "/auth/login" ]));
   }
 }
