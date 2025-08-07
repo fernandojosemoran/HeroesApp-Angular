@@ -15,7 +15,7 @@ const routes: Routes = [
     path: "auth",
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
     canActivate: [ PublicAuthGuardService ],
-    canMatch: [ PublicAuthGuardService ]
+    // canMatch: [ PublicAuthGuardService ]
   },
   {
     path: "heroes",
@@ -28,7 +28,7 @@ const routes: Routes = [
     component: Error404PageComponent,
     canActivate: [ PublicAuthorizationAccountGuard ],
     canMatch: [ PublicAuthorizationAccountGuard ]
-  }
+  },
 ];
 
 @NgModule({
@@ -36,3 +36,4 @@ const routes: Routes = [
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }
+

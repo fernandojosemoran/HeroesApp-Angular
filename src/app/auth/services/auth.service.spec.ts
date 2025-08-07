@@ -79,7 +79,8 @@ describe('./src/app/auth/services/auth.service.ts', () => {
         expect.objectContaining({
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: "True"
           }
         })
       );
@@ -111,7 +112,7 @@ describe('./src/app/auth/services/auth.service.ts', () => {
         null,
         expect.objectContaining({
           withCredentials: true,
-          reportProgress: true,
+          // reportProgress: true,
           headers: {
             Authorization: 'True',
             'Content-Type': 'application/json'

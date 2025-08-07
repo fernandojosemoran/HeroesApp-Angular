@@ -24,6 +24,12 @@ export class LoginPageComponent {
     private readonly _router: Router
   ) {}
 
+  public readonly account: { userName: string; email: string; password: string } = {
+    userName: 'user',
+    email: 'user@gmail.com',
+    password: '12345678'
+  };
+
   private readonly _passwordValidators: ValidatorFn | ValidatorFn[] | null | undefined = [
     Validators.maxLength(100),
     Validators.minLength(3),

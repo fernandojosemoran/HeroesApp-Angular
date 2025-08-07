@@ -34,3 +34,12 @@
     <a routerLink="/auth/register">Create an account?</a>
   </div>
 </form>
+
+<div class="mt-5 bg-blend-color-burn p-4 rounded-lg border-1 border-solid border-blue-200">
+  <p>Estas son las credenciales por defecto, si quieres probar la aplicación.</p>
+  <ol>
+    <li>usuario: {{ account.userName }}</li>
+    <li>correo: {{ account.email }}</li>
+    <li>contraseña: {{ account.password }}</li>
+  </ol>
+</div>
